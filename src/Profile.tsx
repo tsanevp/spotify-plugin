@@ -15,6 +15,13 @@ export default function Profile() {
     return await result.json();
   }
 
+  async function fetchPlaylists() {
+    await fetch("http://localhost:5000/user/playlists", {
+      method: "GET"
+    });
+
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       if (access_token && typeof (access_token) == 'string') {
@@ -32,6 +39,7 @@ export default function Profile() {
       <div className='flex flex-col justify-center'>
         <Link to="/">Go home</Link>
         <a href="http://localhost:5000/auth/login">Login to Spotify</a>
+        <button onClick={fetchPlaylists}>get</button>
       </div>
       <h1>Display your Spotify profile data</h1>
       {!profile ? <div>Loading...</div> :

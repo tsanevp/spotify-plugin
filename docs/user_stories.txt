@@ -1,0 +1,7 @@
+- As a spotify user, I want a way to combine two or more of my playlists into one, so that I don't have to manually move all my songs one-by-one when creating a new playlist.
+- As a spotify user, I want to be able to select which songs I want to add to my playlist at once rather than holding and selecting "add to playlist" for each individual song, so that adding songs to a playlist is faster.
+- As a spotify user, I want the site interface to be easy to understand and navigate, so that it is intuitive how to use the site.
+- As an end user, I want my spotify login to be protected and safe, so that my account does not get hacked.
+- As a site user, I want to be able to search for songs, artists, albumns, so that I can easily add songs to my playlist
+- As a user, I want to be able to add all the songs I want to add to a "cart" and be able to review them before I add them at once.
+- As a spotify user, I want to be able to search for my friend's profiles, so that I can view their playlists and songs.

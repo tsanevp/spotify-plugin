@@ -1,0 +1,11 @@
+- Users MUST be able to multi-select/deselect songs to add to playlist before adding all songs at once.
+- Users MUST be able to securely login to their spotify account.
+- Users MUST user OAuth 2.0 to securely login to their spotify account through spotify.com.
+- Users MUST be able to see their profile information.
+- Users MUST be able to see their existing playlists.
+- Users MUST be able to create new playlists.
+- Users MUST be able to create new playlists from existing playlists.
+- Users MUST be able to select existing playlists to merge together.
+    - This MUST give them the option to scroll through the songs in each playlist, then select/deselect the songs they wish to add/remove.
+- Users MUST be able to search for songs, artists, albums, podcasts, profiles, etc.
+- Users MUST be able to like/add existing playlists to their profile.

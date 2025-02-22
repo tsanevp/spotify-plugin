@@ -9,3 +9,17 @@
     - This MUST give them the option to scroll through the songs in each playlist, then select/deselect the songs they wish to add/remove.
 - Users MUST be able to search for songs, artists, albums, podcasts, profiles, etc.
 - Users MUST be able to like/add existing playlists to their profile.
+
+
+Api Limitations:
+Playlists
+- Max number of songs in a playlist is 10,000
+- https://api.spotify.com/v1/playlists/{playlist_id}/tracks returns max 50 songs from a playlist per request
+- https://api.spotify.com/v1/playlists/{playlist_id}/tracks max 100 items can be added at once to a playlist
+- https://api.spotify.com/v1/me/playlists returns max 50 playlists per request
+- https://api.spotify.com/v1/users/{user_id}/playlists returns max 50 playlist for a user account per request
+- cannot directly add songs when creating a playlist
+    - have to create a playlist, then add the songs after
+
+Users
+- 

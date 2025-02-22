@@ -1,4 +1,4 @@
-import './App.css'
+import '../App.css'
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 
@@ -8,24 +8,27 @@ export default function Profile() {
   const refresh_token = searchParams.get("refresh_token");
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
-  async function fetchProfile(token: string): Promise<UserProfile> {
-    const result = await fetch("https://api.spotify.com/v1/me", {
-      method: "GET", headers: { Authorization: `Bearer ${token}` }
+  async function fetchProfile(): Promise<UserProfile> {
+    const response = await fetch("http://localhost:5000/user/profile", {
+      method: "GET"
     });
-    return await result.json();
+    
+    return await response.json();
   }
 
   async function fetchPlaylists() {
-    await fetch("http://localhost:5000/user/playlists", {
+    const response = await fetch("http://localhost:5000/user/playlists", {
       method: "GET"
     });
+
+    console.log(await response.json());
 
   }
 
   useEffect(() => {
     const fetchData = async () => {
       if (access_token && typeof (access_token) == 'string') {
-        let profile = await fetchProfile(access_token);
+        let profile = await fetchProfile();
         console.log(profile);
         setProfile(profile);
       }

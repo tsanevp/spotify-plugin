@@ -52,7 +52,7 @@ export default function Profile() {
           <ul>
             <li>User ID: {profile.id} </li>
             <li>Email: {profile.email} </li>
-            <li>Spotify URI: <a id="uri" href={profile.external_urls.spotify}>{profile.uri}</a></li>
+            <li>Spotify URI: <a id="uri" href={profile?.external_urls?.spotify}>{profile.uri}</a></li>
             <li>Profile Image: {profile.images[0].url}</li>
           </ul>
         </section>

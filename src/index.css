@@ -16,7 +16,6 @@
 html {
   font-size: var(--font-size);
   scroll-behavior: smooth;
-  height: 100%;
 }
 
 a {

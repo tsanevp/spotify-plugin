@@ -88,11 +88,13 @@ interface PlaylistTrackObject {
     is_local?: boolean;
     track: TrackObject | EpisodeObject;
     playlistName?: string;
+    playlistId?: string;
+    selected?: boolean;
 }
 
 interface TrackObject {
     album?: Album;
-    artists?: SimplifiedArtistObject;
+    artists?: SimplifiedArtistObject[];
     available_markets?: string[];
     disc_number?: number;
     duration_ms?: number;

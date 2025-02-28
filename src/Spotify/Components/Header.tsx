@@ -13,19 +13,23 @@ export default function Header() {
   });
 
   return (
-    <header className="flex-shrink-0 bg-gray-800 text-white p-2">
+    <header className="flex-shrink-0 text-white p-3">
       <nav className="container mx-auto flex items-center justify-between">
-        <h1 className="text-2xl font-bold ">Spotify Playlisters</h1>
+        <h1 className="text-2xl font-bold ">Spotify Playlister</h1>
 
         {/* Navigation Links */}
         <div className="flex gap-10 absolute left-1/2 transform -translate-x-1/2">
           <div className="flex gap-6 items-center">
             <Link to="/">
-              <FiHome size={24} title="Go Home" />
+              <div className="w-10 h-10 bg-[var(--background-elevated-base)] rounded-full flex justify-center items-center">
+                <FiHome size={24} title="Go Home" />
+              </div>
             </Link>
             <SearchBar onSearch={onSearch} />
             <Link to="/create-playlist" title="Create New Playlist">
-              <MdOutlineLibraryAdd size={24} />
+              <div className="w-10 h-10 bg-[var(--background-elevated-base)] rounded-full flex justify-center items-center">
+                <MdOutlineLibraryAdd size={24} />
+              </div>
             </Link>
           </div>
         </div>

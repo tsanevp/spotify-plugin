@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
-import '../App.css'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentProfile } from './Account/reducer';
+import { setPlaylists } from "./Playlists/reducer";
 import { MdOutlineCheckBox } from 'react-icons/md';
 
 export default function HomePage() {
@@ -22,6 +22,27 @@ export default function HomePage() {
     return await response.json();
   }
 
+  async function fetchPlaylists() {
+    try {
+      if (playlists) {
+        return;
+      }
+
+      const response = await fetch("http://localhost:5000/user/playlists", {
+        method: "GET"
+      });
+
+      if (!response.ok) {
+        return
+      }
+
+      const results = await response.json();
+      dispatch(setPlaylists(results));
+    } catch (error) {
+      return;
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       if (access_token && typeof (access_token) == 'string') {
@@ -32,6 +53,10 @@ export default function HomePage() {
 
     fetchData();
   }, [access_token]);
+
+  useEffect(() => {
+    fetchPlaylists();
+  }, []);
 
   return (
     <div id="container" className="flex flex-col lg:flex-row h-full p-3 gap-3 bg-[#000] text-white select-none">

@@ -10,12 +10,12 @@ function SearchBar({ onSearch }: Readonly<{ onSearch: any; }>) {
     };
 
     return (
-        <div className="relative flex items-center">
-            <IoSearchOutline size={24} className="absolute ml-2 text-gray-500" />
+        <div className="group relative flex items-center ">
+            <IoSearchOutline size={24} className="absolute ml-2 text-[var(--text-subdued)] group-hover:text-[var(--text-base)]" />
             <input
                 type="text"
                 placeholder="Search for..."
-                className='bg-white text-black pl-10 p-2 border border-gray-300 rounded-3xl focus:outline-non'
+                className='bg-[var(--background-elevated-base)] text-[var(--text-base)] pl-10 p-2 rounded-3xl placeholder-[var(--text-subdued)] focus:border-[var(--decorative-base)] focus:outline-none focus:ring-2 focus:ring-border border-[var(--decorative-base)]'
                 value={searchTerm}
                 onChange={handleInputChange}
             />

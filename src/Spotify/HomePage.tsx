@@ -59,7 +59,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div id="container" className="flex flex-col lg:flex-row h-full p-3 gap-3 bg-[#000] text-white select-none">
+    <div id="container" className="flex flex-col lg:flex-row h-full p-3 pt-0 gap-3 bg-[#000] text-white select-none">
       {/* Left Container */}
       <div className="flex flex-col flex-1 border rounded bg-[#121212]">
         <div className="header p-5 text-2xl flex justify-between flex-shrink-0">

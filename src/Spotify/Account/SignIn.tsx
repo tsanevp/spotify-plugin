@@ -19,15 +19,10 @@ export default function SignIn() {
         <FaSpotify size={40} />
         <h1 className='text-2xl font-bold mt-3'>Login to Spotify</h1>
         <p className='text-md text-[var(--text-subdued)] mt-1'>This will redirect you to the official Spotify website</p>
-        <a href="http://localhost:5000/auth/login" className="mt-6 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+        <a href="http://localhost:5000/auth/login" className="mt-6 !text-[#000] !font-bold bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           Log in
         </a>
       </div>
     </div>
-    // <div className='flex flex-col'>
-    //   <a href="http://localhost:5000/auth/login">Login to Spotify</a>
-    //   <Link to="/create-playlist">Create Playlist</Link>
-    //   <Link to="/profile">Profile</Link>
-    // </div>
   )
 }

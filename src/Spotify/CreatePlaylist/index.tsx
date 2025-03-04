@@ -19,7 +19,8 @@ export default function CreatePlaylist() {
             }
 
             const response = await fetch("http://localhost:5000/user/playlists", {
-                method: "GET"
+                method: "GET",
+                credentials: 'include'
             });
 
             if (!response.ok) {
@@ -39,7 +40,8 @@ export default function CreatePlaylist() {
             while (true) {
                 let url = `http://localhost:5000/user/playlists/${playlistId}/tracks?offset=${offset}&limit=100`;
                 const response = await fetch(url, {
-                    method: "GET"
+                    method: "GET",
+                    credentials: 'include'
                 });
                 const tracksFromResponse = await response.json();
                 offset += 100;

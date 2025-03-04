@@ -11,12 +11,13 @@ export default function Callback() {
   useEffect(() => {
     const fetchData = async () => {
       const searchParams = new URLSearchParams(location.search);
-      const access_token = searchParams.get('access_token');
-      const refresh_token = searchParams.get('refresh_token');
-
-      if (access_token) {
+      const success = searchParams.get('success');
+      const successful = success && success === 'true';
+        console.log(success);
+      if (successful) {
         let response = await fetch('http://localhost:5000/user/profile', {
           method: 'GET',
+          credentials: 'include'
         });
 
         if (response.ok) {

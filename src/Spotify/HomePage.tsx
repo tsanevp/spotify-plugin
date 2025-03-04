@@ -1,26 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentProfile } from './Account/reducer';
 import { setPlaylists } from "./Playlists/reducer";
 import { MdOutlineCheckBox } from 'react-icons/md';
 
 export default function HomePage() {
-  const [searchParams] = useSearchParams();
-  const access_token = searchParams.get("access_token");
-  const refresh_token = searchParams.get("refresh_token");
   const dispatch = useDispatch();
   const { playlists } = useSelector((state: any) => state.playlistReducer);
-  const { profile } = useSelector((state: any) => state.accountReducer);
-
-
-  async function fetchProfile(): Promise<UserProfile> {
-    const response = await fetch("http://localhost:5000/user/profile", {
-      method: "GET"
-    });
-
-    return await response.json();
-  }
 
   async function fetchPlaylists() {
     try {
@@ -29,7 +14,8 @@ export default function HomePage() {
       }
 
       const response = await fetch("http://localhost:5000/user/playlists", {
-        method: "GET"
+        method: "GET",
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -42,17 +28,6 @@ export default function HomePage() {
       return;
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (access_token && typeof (access_token) == 'string') {
-        let profile = await fetchProfile();
-        dispatch(setCurrentProfile(profile));
-      }
-    }
-
-    fetchData();
-  }, [access_token]);
 
   useEffect(() => {
     fetchPlaylists();
@@ -101,10 +76,5 @@ export default function HomePage() {
         </div>
       </div>
     </div>
-    // <div className='flex flex-col'>
-    //   <a href="http://localhost:5000/auth/login">Login to Spotify</a>
-    //   <Link to="/create-playlist">Create Playlist</Link>
-    //   <Link to="/profile">Profile</Link>
-    // </div>
   )
 }

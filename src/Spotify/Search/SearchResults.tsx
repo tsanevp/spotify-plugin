@@ -2,16 +2,16 @@ import { useSelector } from "react-redux";
 
 export default function SearchResults() {
     const filters = ['All', 'Artists', 'Albums', 'Songs', 'Playlists', 'Shows', 'Episodes', 'Audiobooks'];
-    const { profile } = useSelector((state: any) => state.accountReducer);
+    // const { profile } = useSelector((state: any) => state.accountReducer);
     const { searchResult } = useSelector((state: any) => state.searchResultReducer);
 
-    function formatDuration(durationMs?: number): string {
-        if (!durationMs) return 'N/A';
+    // function formatDuration(durationMs?: number): string {
+    //     if (!durationMs) return 'N/A';
 
-        const minutes = Math.floor(durationMs / 60000);
-        const seconds = Math.floor((durationMs % 60000) / 1000);
-        return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-    }
+    //     const minutes = Math.floor(durationMs / 60000);
+    //     const seconds = Math.floor((durationMs % 60000) / 1000);
+    //     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    // }
 
     return (
         <div className="flex flex-col flex-1 border rounded bg-[#121212]">

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
-import SearchResults from '../Search/SearchResults';
+// import SearchResults from '../Search/SearchResults';
 import { setSearchResult } from '../Search/reducer';
 import { useDispatch } from 'react-redux';
 

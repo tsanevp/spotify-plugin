@@ -7,7 +7,7 @@ import SearchResults from './Search/SearchResults';
 export default function HomePage() {
   const dispatch = useDispatch();
   const { playlists } = useSelector((state: any) => state.playlistReducer);
-  const [isSearching, setIsSearching] = useState(true);
+  const [isSearching] = useState(true);
 
   async function fetchPlaylists() {
     try {
@@ -82,8 +82,6 @@ export default function HomePage() {
           </div>
         )
       }
-
-
     </div>
   )
 }

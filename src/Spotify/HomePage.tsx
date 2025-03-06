@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaylists } from "./Playlists/reducer";
 import { MdOutlineCheckBox } from 'react-icons/md';
+import SearchResults from './Search/SearchResults';
 
 export default function HomePage() {
   const dispatch = useDispatch();
   const { playlists } = useSelector((state: any) => state.playlistReducer);
+  const [isSearching, setIsSearching] = useState(true);
 
   async function fetchPlaylists() {
     try {
@@ -66,15 +68,22 @@ export default function HomePage() {
         </div>
       </div>
       {/* Right Container */}
-      <div className="flex flex-col flex-1 border rounded bg-[#121212]">
-        <div className="header p-5 text-2xl flex justify-between flex-shrink-0">
-          Today's Hits
-        </div>
+      {isSearching
+        ? <SearchResults />
+        : (
+          <div className="flex flex-col flex-1 border rounded bg-[#121212]">
+            <div className="header p-5 text-2xl flex justify-between flex-shrink-0">
+              Today's Hits
+            </div>
 
-        <div className="flex-1 overflow-auto p-3 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
-          {/* Content here */}
-        </div>
-      </div>
+            <div className="flex-1 overflow-auto p-3 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
+              {/* Content here */}
+            </div>
+          </div>
+        )
+      }
+
+
     </div>
   )
 }

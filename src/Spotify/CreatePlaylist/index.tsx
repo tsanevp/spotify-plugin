@@ -5,12 +5,53 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPlaylists } from "../Playlists/reducer";
 
 export default function CreatePlaylist() {
+    const dispatch = useDispatch();
+
+    const { profile } = useSelector((state: any) => state.accountReducer);
+    const { playlists } = useSelector((state: any) => state.playlistReducer);
     const [tracks, setTracks] = useState<Map<string, PlaylistTrackObject>>(new Map());
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
     const [allSelected, setAllSelected] = useState(false);
-    const dispatch = useDispatch();
-    const { playlists } = useSelector((state: any) => state.playlistReducer);
 
+    const [playlistName, setPlaylistName] = useState("");
+    const [playlistDescription, setPlaylistDescription] = useState("");
+    const [playlistPublic, setPlaylistPublic] = useState(false);
+    const [step, setStep] = useState(false);
+
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+
+        try {
+            console.log(tracks);
+            const body = {
+                name: playlistName,
+                public: playlistPublic,
+                collaborative: false,
+                decription: playlistDescription,
+                tracks: getSelectedTrackIds()
+            };
+
+            console.log(body)
+            const response = await fetch(`http://localhost:5000/user/${profile.id}/playlists/create`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },            
+                body: JSON.stringify(body)
+            });
+
+            if (!response.ok) {
+                return
+            }
+
+            const results = await response.json();
+            console.log(results);
+        } catch (error) {
+            return;
+        }
+
+    }
 
     async function fetchPlaylists() {
         try {
@@ -82,6 +123,12 @@ export default function CreatePlaylist() {
         });
     };
 
+    const getSelectedTrackIds = () => {
+        return Array.from(tracks.values())
+            .filter((value) => value.selected) 
+            .map((value) => value.track.uri);  
+    }
+
     const toggleTrackSelection = (trackId: string) => {
         setTracks(prevTracks => {
             const newTracks = new Map(prevTracks);
@@ -150,7 +197,7 @@ export default function CreatePlaylist() {
         <div id="container" className="flex flex-col lg:flex-row h-full px-3 pb-3 gap-3 bg-[#000] text-white select-none">
             {/* Left Container */}
             <div className="flex flex-col flex-1 border rounded bg-[#121212]">
-                <div className="header p-5 text-2xl flex justify-between flex-shrink-0">
+                <div className="header p-6 text-3xl font-bold flex justify-between flex-shrink-0">
                     1. Select Playlist(s) to merge
                 </div>
 
@@ -162,8 +209,8 @@ export default function CreatePlaylist() {
                                 <div className="flex flex-wrap content-center justify-left">
                                     {
                                         playlist.id && selectedItems.has(playlist.id) ?
-                                            <MdOutlineCheckBox onClick={() => checkboxClicked(playlist.id, playlist.name)} size={30} /> :
-                                            <MdOutlineCheckBoxOutlineBlank onClick={() => checkboxClicked(playlist.id, playlist.name)} size={30} />
+                                            <MdOutlineCheckBox onClick={() => checkboxClicked(playlist.id, playlist.name)} size={24} /> :
+                                            <MdOutlineCheckBoxOutlineBlank onClick={() => checkboxClicked(playlist.id, playlist.name)} size={24} />
                                     }
                                 </div>
                                 <div className="playlist-image ml-5">
@@ -181,92 +228,152 @@ export default function CreatePlaylist() {
                         </div>
                     ))}
                 </div>
-
-                <div className="footer p-5 text-lg flex justify-end gap-x-4 flex-shrink-0">
-                    <button className="bg-[#191919] px-4 py-2 rounded">Back</button>
-                </div>
             </div>
 
             {/* Right Container */}
-            <div className="flex flex-col flex-1 border rounded bg-[#121212]">
-                <div className="header p-5 text-2xl flex justify-between flex-shrink-0">
-                    2. Review and create playlist
-                </div>
+            {!step ? (
+                <div className="flex flex-col flex-1 border rounded bg-[#121212]">
+                    <div className="header p-6 text-3xl font-bold flex justify-between flex-shrink-0">
+                        2. Review and create playlist
+                    </div>
 
-                <div className="flex-1 overflow-auto p-3 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
-                    {!tracks && <h1>loading...</h1>}
-                    <table className="p-10 w-full table-fixed">
-                        <thead>
-                            <tr className="border-b">
-                                <th className="p-2 text-left w-12">
-                                    <div className="flex content-center justify-center flex-nowrap">
-                                        {
-                                            allSelected ?
-                                                <MdOutlineCheckBox onClick={() => setAllSelected(false)} size={24} /> :
-                                                <MdOutlineCheckBoxOutlineBlank onClick={selectAllTracks} size={24} />
-                                        }
-                                    </div>
-                                </th>
-                                <th className="p-2 text-sm pl-10 text-right w-10">#</th>
-                                <th className="p-2 text-sm pl-6 text-left w-7/16">Title</th>
-                                <th className="p-2 text-sm text-left w-2/11">Source</th>
-                                <th className="p-2 text-sm text-left w-2/11">Album</th>
-                                <th className="p-2 text-sm text-left"><FaRegClock size={25} className="" /></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Array.from(tracks.entries()).map(([trackId, track], index: number) => {
-                                if (isTrackObject(track.track)) {
-                                    const artists = track.track.artists?.map(artist => artist.name).join(", ");
+                    <div className="flex-1 overflow-auto p-3 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
+                        {!tracks && <h1>loading...</h1>}
+                        <table className="p-10 w-full table-fixed">
+                            <thead>
+                                <tr className="border-b">
+                                    <th className="p-2 text-left w-12">
+                                        <div className="flex content-center justify-center flex-nowrap">
+                                            {
+                                                allSelected ?
+                                                    <MdOutlineCheckBox onClick={() => setAllSelected(false)} size={24} /> :
+                                                    <MdOutlineCheckBoxOutlineBlank onClick={selectAllTracks} size={24} />
+                                            }
+                                        </div>
+                                    </th>
+                                    <th className="p-2 text-sm pl-10 text-right w-10">#</th>
+                                    <th className="p-2 text-sm pl-6 text-left w-7/16">Title</th>
+                                    <th className="p-2 text-sm text-left w-2/11">Source</th>
+                                    <th className="p-2 text-sm text-left w-2/11">Album</th>
+                                    <th className="p-2 text-sm text-left"><FaRegClock size={25} className="" /></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.from(tracks.entries()).map(([trackId, track], index: number) => {
+                                    if (isTrackObject(track.track)) {
+                                        const artists = track.track.artists?.map(artist => artist.name).join(", ");
+                                        return (
+                                            <tr key={track.track.id} className="hover:bg-[#1f1f1f] h-14">
+                                                <td className="p-2 text-left w-12">
+                                                    <div className="flex content-center justify-center flex-nowrap">
+
+                                                        {
+                                                            track.selected ?
+                                                                <MdOutlineCheckBox onClick={() => toggleTrackSelection(trackId)} size={24} /> :
+                                                                <MdOutlineCheckBoxOutlineBlank onClick={() => toggleTrackSelection(trackId)} size={24} />
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td className="p-2 pl-10 text-right w-10">{index}</td>
+                                                <td className="p-2 pl-6 text-left w-7/16">
+                                                    <div className="flex flex-col">
+                                                        <p className="text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap" title={track.track.name}>{track.track.name}</p>
+                                                        <p className="text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={artists}>{artists}</p>
+
+                                                    </div>
+
+                                                </td>
+                                                <td className="p-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={track.playlistName}>{track.playlistName}</td>
+                                                <td className="p-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={track.track.album?.name}>{track.track.album?.name}</td>
+                                                <td className="p-2 text-sm">{formatDuration(track.track?.duration_ms)}</td>
+                                            </tr>
+                                        );
+                                    }
+
+                                    // If it's an EpisodeObject, handle it differently
                                     return (
-                                        <tr key={track.track.id} className="hover:bg-[#1f1f1f] h-14">
-                                            <td className="p-2 text-left w-12">
-                                                <div className="flex content-center justify-center flex-nowrap">
-
-                                                    {
-                                                        track.selected ?
-                                                            <MdOutlineCheckBox onClick={() => toggleTrackSelection(trackId)} size={24} /> :
-                                                            <MdOutlineCheckBoxOutlineBlank onClick={() => toggleTrackSelection(trackId)} size={24} />
-                                                    }
-                                                </div>
-                                            </td>
-                                            <td className="p-2 pl-10 text-right w-10">{index}</td>
-                                            <td className="p-2 pl-6 text-left w-7/16">
-                                                <div className="flex flex-col">
-                                                    <p className="text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap" title={track.track.name}>{track.track.name}</p>
-                                                    <p className="text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={artists}>{artists}</p>
-
-                                                </div>
-
-                                            </td>
-                                            <td className="p-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={track.playlistName}>{track.playlistName}</td>
-                                            <td className="p-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap" title={track.track.album?.name}>{track.track.album?.name}</td>
-                                            <td className="p-2 text-sm">{formatDuration(track.track?.duration_ms)}</td>
+                                        <tr key={track.track.id} className="hover:bg-[#1f1f1f]">
+                                            <td className="p-2">{index}</td>
+                                            <td className="p-2">{index}</td>
+                                            <td className="p-2">{track.track.name}</td>
+                                            <td className="p-2">{track.playlistName}</td>
+                                            <td className="p-2">No Album (Episode)</td>
+                                            <td className="p-2">{track.track.name}</td>
                                         </tr>
                                     );
-                                }
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
 
-                                // If it's an EpisodeObject, handle it differently
-                                return (
-                                    <tr key={track.track.id} className="hover:bg-[#1f1f1f]">
-                                        <td className="p-2">{index}</td>
-                                        <td className="p-2">{index}</td>
-                                        <td className="p-2">{track.track.name}</td>
-                                        <td className="p-2">{track.playlistName}</td>
-                                        <td className="p-2">No Album (Episode)</td>
-                                        <td className="p-2">{track.track.name}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                    <div className="footer p-5 text-lg flex justify-end gap-x-4 flex-shrink-0">
+                        <button className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-2xl !text-[#000] font-semibold rounded-full transition duration-200" onClick={() => setStep(true)}>Next</button>
+                    </div>
+                </div>) : (
+                <div className="flex flex-col flex-1 border rounded bg-[#121212]">
+                    <div className="header p-6 text-3xl font-bold flex justify-between flex-shrink-0">
+                        3. Create playlist
+                    </div>
 
-                <div className="footer p-5 text-lg flex justify-end gap-x-4 flex-shrink-0">
-                    <button className="bg-[#191919] px-4 py-2 rounded">Cancel</button>
-                    <button className="bg-[#191919] px-4 py-2 rounded">Create</button>
-                </div>
-            </div>
+                    <div className="flex-1 overflow-auto p-5 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
+                        {!tracks && <h1>loading...</h1>}
+                        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
+                            <div className="flex flex-col">
+                                <label htmlFor="playlist-name" className="text-xl font-medium">Playlist Name</label>
+                                <input id="playlist-name" type="text" className="bg-white text-black rounded mt-2 p-2 text-sm" placeholder="Enter name..." required value={playlistName}
+                                    onChange={(event) => {
+                                        setPlaylistName(event.target.value)
+                                    }} />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <label htmlFor="playlist-description" className="text-xl font-medium">Playlist Description</label>
+                                <textarea id="playlist-description" className="bg-white text-black rounded mt-2 p-2 text-sm" placeholder="Enter description..." rows={5} cols={20} value={playlistDescription} onChange={(event) => {
+                                    setPlaylistDescription(event.target.value)
+                                }} />
+                            </div>
+
+                            <div>
+                                <p className="text-xl font-medium">Playlist Visibility</p>
+                                <div className="mt-2">
+                                    <label htmlFor="playlist-visible">Yes</label>
+                                    <input
+                                        type="radio"
+                                        id="playlist-visible"
+                                        name="playlist-visibility"
+                                        className="mx-2"
+                                        defaultChecked={playlistPublic === true}
+                                        onChange={() =>
+                                            setPlaylistPublic(true)
+                                        }
+                                    />
+                                    <label htmlFor="playlist-hidden">No</label>
+                                    <input
+                                        type="radio"
+                                        id="playlist-hidden"
+                                        name="playlist-visibility"
+                                        className="mx-2"
+                                        defaultChecked={playlistPublic !== true}
+                                        onChange={() =>
+                                            setPlaylistPublic(false)
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <h1 className="text-xl font-medium">Stats</h1>
+                                <p>Playlists Merged: {selectedItems.size}</p>
+                                <p>Number of Songs: {getSelectedTrackIds().length}</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div className="footer p-5 text-lg flex justify-end gap-x-4 flex-shrink-0">
+                        <button className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-2xl !text-[#000] font-semibold rounded-full transition duration-200" onClick={() => setStep(false)}>Back</button>
+                        <button type="submit" className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-2xl !text-[#000] font-semibold rounded-full transition duration-200" onClick={handleSubmit}>Create</button>
+                    </div>
+                </div>)}
         </div>
     )
 }

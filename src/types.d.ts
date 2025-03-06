@@ -188,6 +188,28 @@ interface Show {
     total_episodes: number;
 }
 
+interface AudioBooks {
+    authors: Author[];
+    available_markets: string[];
+    copyrights: CopyrightObject[];
+    description: string;
+    html_description: string;
+    edition: string;
+    explicit: boolean;
+    external_urls: ExternalUrls;
+    href: string;
+    id: string;
+    images: Image[];
+    languages: string[];
+    media_type: string;
+    name: string;
+    narrators: Narrator[];
+    publisher: string;
+    type: 'audiobook';
+    uri: string;
+    total_chapters: number;
+}
+
 interface CopyrightObject {
     text?: string;
     type: 'C' | 'P';
@@ -212,3 +234,92 @@ interface AddedBy {
     type?: string;
     uri?: string;
 }
+
+interface SearchTrack {
+    href: string;
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+    items: TrackObject[];
+}
+interface Search {
+    tracks: SearchTrack;
+    artists: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: Artist[];
+    };
+    albums: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: Album[];
+    };
+    playlists: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: SimplifiedPlaylistObject[];
+    };
+    shows: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: Show[];
+    };
+    episodes: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: EpisodeObject[];
+    };
+    audiobooks: {
+        href: string;
+        limit: number;
+        next: string | null;
+        offset: number;
+        previous: string | null;
+        total: number;
+        items: AudioBooks[];
+    };
+}
+
+interface Author {
+    name?: string;
+}
+
+interface Narrator {
+    name?: string;
+}
+
+interface Artist {
+    external_urls?: ExternalUrls;
+    followers?: Followers;
+    genres?: string[];
+    href?: string;
+    id?: string;
+    images?: Image[];
+    name?: string;
+    popularity?: number;
+    type?: string;
+    uri?: string;
+}
+

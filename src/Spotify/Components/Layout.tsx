@@ -19,6 +19,7 @@ const Layout: React.FC = () => {
           &copy; {new Date().getFullYear()} My App. All rights reserved.
         </div>
       </footer> */}
+
     </div>
   );
 };

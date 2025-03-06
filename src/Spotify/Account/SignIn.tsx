@@ -7,6 +7,24 @@ export default function SignIn() {
   const navigate = useNavigate();
   const { profile } = useSelector((state: any) => state.accountReducer);
 
+  async function checkServerHealth() {
+    try {
+      const response = await fetch("http://localhost:5000/health", {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        window.location.href = 'http://localhost:5000/auth/login';
+      } else {
+        console.error('Server is not live', response.status);
+        alert('Server is currently unavailable. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error checking server status:', error);
+      alert('Server is currently unavailable. Please try again later.');
+    }
+  }
+
   useEffect(() => {
     if (profile) {
       navigate('/');
@@ -19,9 +37,9 @@ export default function SignIn() {
         <FaSpotify size={40} />
         <h1 className='text-2xl font-bold mt-3'>Login to Spotify</h1>
         <p className='text-md text-[var(--text-subdued)] mt-1'>This will redirect you to the official Spotify website</p>
-        <a href="http://localhost:5000/auth/login" className="mt-6 !text-[#000] !font-bold bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+        <button onClick={checkServerHealth} className="mt-6 !text-[#000] !font-bold bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           Log in
-        </a>
+        </button>
       </div>
     </div>
   )

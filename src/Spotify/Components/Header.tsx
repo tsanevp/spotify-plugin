@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header className="flex-shrink-0 text-white p-3">
       <nav className="container mx-auto flex items-center justify-between">
-        <h1 className="text-3xl font-bold ">Spotify Playlister</h1>
+        <h1 className="text-lg md:text-2xl lg:text-3xl font-bold">Spotify Playlister</h1>
 
         {/* Navigation Links */}
         {/* <div className="flex gap-10 absolute left-1/2 transform -translate-x-1/2">
@@ -38,17 +38,17 @@ export default function Header() {
 
         <div>
           {!profile ? (
-            <>
-              <a href="https://www.spotify.com/us/signup" target="_blank" rel="noopener noreferrer" className="mr-6 text-xl" title="Sign up for spotify">
+            <div className="flex items-center">
+              <a href="https://www.spotify.com/us/signup" target="_blank" rel="noopener noreferrer" className="mr-3 lg:mr-6 text-sm md:text-lg lg:text-xl" title="Sign up for spotify">
                 Sign up
               </a>
               <a
                 href="http://localhost:5000/auth/login"
-                className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-2xl !text-[#000] font-semibold rounded-full transition duration-200" title="Login to spotify"
+                className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-sm md:text-xl lg:text-2xl !text-[#000] font-semibold rounded-full transition duration-200" title="Login to spotify"
               >
                 Login
               </a>
-            </>
+            </div>
           ) : (
             <button
               onClick={() => signOutEvent()}

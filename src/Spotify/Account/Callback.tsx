@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setCurrentProfile } from './reducer';
+import { getUserProfile } from './client';
 
 export default function Callback() {
     const dispatch = useDispatch();
@@ -14,10 +15,7 @@ export default function Callback() {
             const success = searchParams.get('success');
             const successful = success && success === 'true';
             if (successful) {
-                let response = await fetch('http://localhost:5000/user/profile', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
+                const response = await getUserProfile();
 
                 if (response.ok) {
                     const profile = await response.json();

@@ -26,3 +26,12 @@ export const userLogin = async () => {
         alert('Server is currently unavailable. Please try again later.');
     }
 }
+
+export const getUserProfile = async () => {
+    const response = await fetch(`${REMOTE_SERVER}/user/profile`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+}

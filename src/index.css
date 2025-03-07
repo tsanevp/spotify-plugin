@@ -99,6 +99,34 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 } */
 
+@media (max-width: 1024px) {
+  html {
+      font-size: 10px;
+      /* Scale down for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+      font-size: 12px;
+      /* Scale down for smaller screens */
+  }
+}
+
+@media (max-width: 425px) {
+  html {
+      font-size: 8px;
+      /* Scale down for smaller screens */
+  }
+}
+
+@media (max-width: 320px) {
+  html {
+      font-size: 6px;
+      /* Scale down for smaller screens */
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

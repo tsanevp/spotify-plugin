@@ -1,4 +1,5 @@
 import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
+import { useMediaQuery } from "../Hooks/useMediaQuery";
 
 export default function DisplayPlaylists({ playlists, selectedItems, checkboxClicked }:
     Readonly<{
@@ -7,6 +8,8 @@ export default function DisplayPlaylists({ playlists, selectedItems, checkboxCli
         checkboxClicked: (playlistId?: string, playlistName?: string) => void;
     }>
 ) {
+    const isMobile = useMediaQuery('(max-width: 768px)')
+    const iconSize = isMobile ? 16 : 24;
     return (
         <div className="md:flex-1 overflow-auto p-3 md:flex-grow scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
             {!playlists && <h1>loading...</h1>}
@@ -18,11 +21,11 @@ export default function DisplayPlaylists({ playlists, selectedItems, checkboxCli
                                 playlist.id && selectedItems.has(playlist.id)
                                     ? <MdOutlineCheckBox
                                         onClick={() => checkboxClicked(playlist.id, playlist.name)}
-                                        size={24}
+                                        size={iconSize}
                                     />
                                     : <MdOutlineCheckBoxOutlineBlank
                                         onClick={() => checkboxClicked(playlist.id, playlist.name)}
-                                        size={24}
+                                        size={iconSize}
                                     />
                             }
                         </div>

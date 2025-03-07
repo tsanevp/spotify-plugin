@@ -1,5 +1,6 @@
 import { FaRegClock } from "react-icons/fa";
 import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
+import { useMediaQuery } from "../Hooks/useMediaQuery";
 
 export default function DisplayTracks({ tracks, allSelected, setAllSelected, selectAllTracks, toggleTrackSelection }:
     Readonly<{
@@ -22,6 +23,9 @@ export default function DisplayTracks({ tracks, allSelected, setAllSelected, sel
         return `${minutes}:${seconds.toString().padStart(2, "0")}`;
     }
 
+    const isMobile = useMediaQuery('(max-width: 1024px)')
+    const iconSize = isMobile ? 16 : 24;
+
     return (
         <div className="flex-1 overflow-auto p-3 scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-300">
             {!tracks && <h1>loading...</h1>}
@@ -41,7 +45,7 @@ export default function DisplayTracks({ tracks, allSelected, setAllSelected, sel
                         <th className="p-2 text-sm pl-6 text-left w-7/16">Title</th>
                         <th className="p-2 text-sm text-left w-2/11">Source</th>
                         <th className="p-2 text-sm text-left w-2/11">Album</th>
-                        <th className="p-2 text-sm text-left"><FaRegClock size={25} className="" /></th>
+                        <th className="p-2 text-sm text-left"><FaRegClock size={iconSize} className="" /></th>
                     </tr>
                 </thead>
                 <tbody>

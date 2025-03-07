@@ -173,12 +173,12 @@ export default function CreatePlaylist() {
     return (
         <div
             id="container"
-            className="h-full flex flex-col lg:flex-row px-12 lg:px-3 pb-3 gap-3 bg-[#000] text-white select-none"
+            className="h-full flex flex-col md:flex-row px-12 lg:px-3 pb-3 gap-3 bg-[#000] text-white select-none"
         >
             {displayPlaylists() &&
                 <ContentContainer
                     header={
-                        <div className="header p-6 md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">
+                        <div className="header p-6 text-xl md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">
                             1. Select Playlist(s) to merge
                             {isMobile && (
                                 <button
@@ -203,7 +203,7 @@ export default function CreatePlaylist() {
             {displayTrackSelection() &&
                 <ContentContainer
                     header={
-                        <div className="header p-6 md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">
+                        <div className="header p-6 text-xl md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">
                             2. Review and create playlist
                             {isMobile && (
                                 <div className="flex gap-x-4">
@@ -232,7 +232,6 @@ export default function CreatePlaylist() {
                             toggleTrackSelection={toggleTrackSelection}
                         />
                     }
-
                     footer={
                         !isMobile && (
                             <button
@@ -243,13 +242,12 @@ export default function CreatePlaylist() {
                             </button>
                         )
                     }
-
                 />
             }
 
             {displayPlaylistReview() &&
                 <ContentContainer
-                    header={<div className="header p-6 md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">3. Create playlist</div>}
+                    header={<div className="header p-6 text-xl md:text-2xl lg:text-3xl font-bold flex justify-between flex-shrink-0">3. Create playlist</div>}
                     content={
                         <DisplayReview
                             tracks={tracks}

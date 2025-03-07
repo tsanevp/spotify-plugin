@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import HomePage from './Spotify/HomePage';
-import Profile from './Spotify/Profile';
-import CreatePlaylist from './Spotify/CreatePlaylist';
+import Profile from './Spotify/Account/Profile';
+import CreatePlaylist from './Spotify/Playlists';
 import Layout from './Spotify/Components/Layout';
 import SignIn from './Spotify/Account/SignIn';
 import ProtectedRoute from './Spotify/Account/ProtectedRoute';

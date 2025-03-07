@@ -5,8 +5,10 @@
 // import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentProfile } from "../Account/reducer";
+import { userLogin } from "../Account/client"
 
 export default function Header() {
+  const SPOTIFY_SIGN_UP_LINK = "https://www.spotify.com/us/signup";
   const { profile } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
@@ -39,20 +41,28 @@ export default function Header() {
         <div>
           {!profile ? (
             <div className="flex items-center">
-              <a href="https://www.spotify.com/us/signup" target="_blank" rel="noopener noreferrer" className="mr-3 lg:mr-6 text-sm md:text-lg lg:text-xl" title="Sign up for spotify">
+              <a
+                href={SPOTIFY_SIGN_UP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mr-3 lg:mr-6 text-sm md:text-lg lg:text-xl"
+                title="Sign up for spotify"
+              >
                 Sign up
               </a>
-              <a
-                href="http://localhost:5000/auth/login"
-                className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-sm md:text-xl lg:text-2xl !text-[#000] font-semibold rounded-full transition duration-200" title="Login to spotify"
+              <button
+                onClick={() => userLogin()}
+                className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-sm md:text-xl lg:text-2xl !text-[#000] font-semibold rounded-full transition duration-200"
+                title="Login to spotify"
               >
                 Login
-              </a>
+              </button>
             </div>
           ) : (
             <button
               onClick={() => signOutEvent()}
-              className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-sm !text-[#000] font-semibold rounded-full transition duration-200" title="Sign out of spotify"
+              className="inline-block py-2 px-4 bg-[var(--text-positive)] hover:bg-[var(--text-positive-hover)] text-sm !text-[#000] font-semibold rounded-full transition duration-200"
+              title="Sign out of spotify"
             >
               Sign out
             </button>

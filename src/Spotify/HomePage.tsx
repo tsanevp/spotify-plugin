@@ -1,35 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPlaylists } from "./Playlists/reducer";
+import { useSelector } from 'react-redux';
 import { MdOutlineCheckBox } from 'react-icons/md';
 import SearchResults from './Search/SearchResults';
+import { useFetchPlaylists  } from './Hooks/useFetchPlaylists';
 
 export default function HomePage() {
-  const dispatch = useDispatch();
+  const fetchPlaylists = useFetchPlaylists();
   const { playlists } = useSelector((state: any) => state.playlistReducer);
   const [isSearching] = useState(true);
-
-  async function fetchPlaylists() {
-    try {
-      if (playlists) {
-        return;
-      }
-
-      const response = await fetch("http://localhost:5000/user/playlists", {
-        method: "GET",
-        credentials: 'include'
-      });
-
-      if (!response.ok) {
-        return
-      }
-
-      const results = await response.json();
-      dispatch(setPlaylists(results));
-    } catch (error) {
-      return;
-    }
-  }
 
   useEffect(() => {
     fetchPlaylists();

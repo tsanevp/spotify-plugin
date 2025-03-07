@@ -9,7 +9,7 @@ const Layout: React.FC = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 lg:overflow-hidden">
         <Outlet />
       </main>
 
